@@ -1,0 +1,21 @@
+rules_version = '2';
+
+// Reglas iniciales de Firestore (Sprint 1).
+// Por ahora se restringe la escritura/lectura a usuarios autenticados,
+// ya que la definición de roles (Administrador / Cajero) se abordará
+// junto con el módulo de autenticación en sprints posteriores.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    match /productos/{productId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null;
+    }
+
+    // Colección reservada para futuras etiquetas / códigos de barras (Sprint 7)
+    match /etiquetas/{etiquetaId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null;
+    }
+  }
+}
